@@ -33,3 +33,10 @@ Where each `CycleReport` is `{ target: object, path: Array<string|number|symbol>
 The detector traverses every own property, including symbols and non-enumerable ones reachable via `Reflect.ownKeys`. If you rely on properties being hidden from `Object.keys`, they are not hidden here. This is deliberate: a symbol-keyed property holding a back-reference is still a cycle that will break `JSON.stringify`. Getter properties that throw are skipped silently; a throwing getter is not itself a reference cycle and aborting the whole traversal for it would be worse.
 
 Primitives are never memoised, because they cannot participate in an identity cycle. Wrapper objects (`new String`, `new Number`, etc.) are object-typed and are treated like any other object — a `box.self = box` cycle is real and is reported.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
