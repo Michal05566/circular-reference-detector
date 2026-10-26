@@ -1,6 +1,6 @@
 {
   "name": "circular-reference-detector",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Traverses an object graph and reports nodes that appear more than once, including the exact path at which each cycle closes.",
   "type": "module",
   "main": "src/index.js",
